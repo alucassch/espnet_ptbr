@@ -37,12 +37,10 @@ if [ -z "${ALCAIM}" ]; then
 fi
 
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
-    if [ ! -e "${ALCAIM}/download.done" ]; then
 	echo "stage 1: Data Download to ${ALCAIM}"
 	for part in lapsbm-val lapsbm-test voxforge-ptbr alcaim sid; do
             local/download_and_untar.sh ${ALCAIM} ${data_url} ${part}
 	done
-    touch ${ALCAIM}/download.done
     else
         log "stage 1: ${ALCAIM}/download.done is already existing. Skip data downloading"
     fi
