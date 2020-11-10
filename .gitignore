@@ -52,7 +52,7 @@ tools/miniconda.sh
 tools/moses/
 tools/mwerSegmenter/
 tools/nkf/
-tools/venv/
+tools/venv*/
 tools/sentencepiece/
 tools/swig/
 tools/warp-ctc/
