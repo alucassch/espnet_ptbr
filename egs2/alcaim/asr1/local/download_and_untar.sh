@@ -44,9 +44,11 @@ if [ -z "$url" ]; then
   exit 1
 fi
 
-if [ -f $data/${part}.complete ]; then
+if [ -f $data/${part}/complete ]; then
   echo "$0: data part $part was already successfully extracted, nothing to do."
   exit 0
+else
+  mkdir -p $data/$part
 fi
 
 sizes="68644160 51664659 373263333 12849484681 1034271578"
@@ -78,12 +80,12 @@ if [ ! -f $data/$part.tar.gz ]; then
   fi
 fi
 
-if ! tar -C $data -xvzf $data/$part.tar.gz; then
+if ! tar -C $data/$part -xvzf $data/$part.tar.gz; then
   echo "$0: error un-tarring archive $data/$part.tar.gz"
   exit 1
 fi
 
-touch $data/${part}.complete
+touch $data/${part}/.complete
 
 echo "$0: Successfully downloaded and un-tarred $data/$part.tar.gz"
 
