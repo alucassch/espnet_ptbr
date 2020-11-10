@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Copyright   2014  Johns Hopkins University (author: Daniel Povey)
+#             2020  Universidade Federal de Santa Catarina (author: André Schlichting)
 # Apache 2.0
 
 remove_archive=false
-
 
 if [ "$1" == --remove-archive ]; then
   remove_archive=true
@@ -30,7 +30,7 @@ if [ ! -d "$data" ]; then
 fi
 
 part_ok=false
-list="lapsbm-val lapsbm-test voxforge-ptbr alcaim sid"
+list="lapsbm-val lapsbm-test voxforge-ptbr alcaim sid pt"
 for x in $list; do
   if [ "$part" == $x ]; then part_ok=true; fi
 done
@@ -44,14 +44,14 @@ if [ -z "$url" ]; then
   exit 1
 fi
 
-if [ -f $data/${part}/complete ]; then
+if [ -f $data/${part}.complete ]; then
   echo "$0: data part $part was already successfully extracted, nothing to do."
   exit 0
 else
   mkdir -p $data/$part
 fi
 
-sizes="68644160 51664659 373263333 12849484681 1034271578"
+sizes="68644160 51664659 373263333 12849484681 1034271578 1454367644"
 
 if [ -f $data/$part.tar.gz ]; then
   size=$(/bin/ls -l $data/$part.tar.gz | awk '{print $5}')
@@ -85,11 +85,12 @@ if ! tar -C $data/$part -xvzf $data/$part.tar.gz; then
   exit 1
 fi
 
-touch $data/${part}/.complete
+touch $data/${part}.complete
 
 echo "$0: Successfully downloaded and un-tarred $data/$part.tar.gz"
 
 if $remove_archive; then
   echo "$0: removing $data/$part.tar.gz file since --remove-archive option was supplied."
+  rm $data/$part.complete
   rm $data/$part.tar.gz
 fi
