@@ -7,7 +7,7 @@ set -o pipefail
 
 train_set="train"
 valid_set="dev"
-test_sets="lapsbm voxforge-ptbr"
+test_sets="lapsbm voxforge-ptbr commonvoice-ptbr"
 
 asr_config=conf/tuning/train_asr_transformer.yaml
 lm_config=conf/tuning/train_lm_adam.yaml
@@ -16,7 +16,7 @@ inference_config=conf/decode_asr.yaml
 ./asr.sh \
     --nj 12 \
     --lang pt \
-    --ngpu 2 \
+    --ngpu 1 \
     --feats_type fbank_pitch \
     --token_type bpe \
     --bpemode bpe \

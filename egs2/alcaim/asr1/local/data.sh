@@ -95,6 +95,9 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
     python local/postproc_text.py data/${train_dev_cv}/text
     
     utils/fix_data_dir.sh data/${train_set_cv}
+
+    utils/combine_data.sh --extra_files utt2num_frames data/commonvoice-ptbr data/${train_set_cv} data/${train_dev_cv} data/${train_dev_cv}
+
 fi
 
 
@@ -117,6 +120,8 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
     utils/fix_data_dir.sh data/voxforge_tr_pt
     utils/fix_data_dir.sh data/voxforge_dt_pt
     utils/fix_data_dir.sh data/voxforge_et_pt
+
+    utils/combine_data.sh --extra_files utt2num_frames data/voxforge-ptbr data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt
 
 fi
 
