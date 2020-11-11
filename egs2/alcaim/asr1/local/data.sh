@@ -122,7 +122,7 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
     utils/fix_data_dir.sh data/voxforge_et_pt
 
     utils/combine_data.sh --extra_files utt2num_frames data/voxforge-ptbr data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt
-
+    rm -rf exp/data_prep_pt
 fi
 
 

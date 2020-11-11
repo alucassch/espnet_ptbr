@@ -5,7 +5,8 @@ from glob import glob
 from typing import List
 
 def process_text(text: str) -> str:
-    return text.lower()
+    #"" is some strange unicode char
+    return text.lower().replace("","")
 
 def main(args: List[str]):
     src, dst = None, None
