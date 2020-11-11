@@ -1,1 +1,0 @@
-../../../../voxforge/asr1/local/prep_transducer_finetuning.sh

@@ -56,7 +56,7 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
 
     if [ ! -e "${VOXFORGE}/voxforge/pt/extracted" ]; then
         echo "stage 1: Data Download to ${VOXFORGE}"
-        local/data_prep/local_voxforge/getdata.sh pt ${VOXFORGE}/voxforge
+        local/getdata.sh pt ${VOXFORGE}/voxforge
     else
         log "stage 1: ${VOXFORGE}/voxforge/pt/extracted is already existing. Skip data downloading"
     fi
@@ -65,10 +65,10 @@ fi
 
 if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
     log "stage 2: Preparing data for Alcaim, LapsBM & Sid"
-    local/data_prep/data_prep_lapsbm.sh ${ALCAIM}/lapsbm-val data/lapsbm-val
-    local/data_prep/data_prep_lapsbm.sh ${ALCAIM}/lapsbm-test data/lapsbm-test
-    local/data_prep/data_prep_sid.sh ${ALCAIM}/sid data/sid
-    local/data_prep/data_prep_alcaim.sh ${ALCAIM}/alcaim/alcaim data/alcaim
+    local/data_prep_lapsbm.sh ${ALCAIM}/lapsbm-val data/lapsbm-val
+    local/data_prep_lapsbm.sh ${ALCAIM}/lapsbm-test data/lapsbm-test
+    local/data_prep_sid.sh ${ALCAIM}/sid data/sid
+    local/data_prep_alcaim.sh ${ALCAIM}/alcaim/alcaim data/alcaim
 fi
 
 
@@ -96,12 +96,12 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
     log "stage 4: Preparing data for voxforge"
     selected=${VOXFORGE}/voxforge/pt/extracted
     # Initial normalization of the data
-    local/data_prep/voxforge_data_prep.sh --flac2wav false "${selected}" "pt"
-    local/data_prep/voxforge_format_data.sh "pt"
+    local/voxforge_data_prep.sh --flac2wav false "${selected}" "pt"
+    local/voxforge_format_data.sh "pt"
 
-    log "stage 3: Split all_pt into data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt"
+    log "stage 4: Split all_pt into data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt"
     # following split consider prompt duplication (but does not consider speaker overlap instead)
-    local/data_prep/split_tr_dt_et.sh data/all_pt data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt
+    local/split_tr_dt_et.sh data/all_pt data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt
     rm -rf data/all_pt data/local
 fi
 
