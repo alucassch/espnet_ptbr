@@ -96,7 +96,7 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
     log "stage 4: Preparing data for voxforge"
     selected=${VOXFORGE}/voxforge/pt/extracted
     # Initial normalization of the data
-    local/voxforge_data_prep.sh --flac2wav false "${selected}" "pt"
+    local/voxforge_data_prep.sh --flac2wav true "${selected}" "pt"
     local/voxforge_format_data.sh "pt"
 
     log "stage 4: Split all_pt into data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt"
