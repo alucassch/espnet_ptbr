@@ -6,7 +6,7 @@ from typing import List
 
 def process_text(text: str) -> str:
     #"" is some strange unicode char
-    return text.lower().replace("","")
+    return text.lower().replace("","").replace("-"," ")
 
 def main(args: List[str]):
     src, dst = None, None
