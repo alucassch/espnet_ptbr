@@ -77,18 +77,24 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
     ### Task dependent. You have to make data the following preparation part by yourself.
     for part in "validated" "test" "dev"; do
         # use underscore-separated names in data directories.
-        local/data_prep/data_prep_commonvoice.pl "${COMMONVOICE}/pt/cv-corpus-5.1-2020-06-22/pt" ${part} data/commonvoice_"$(echo "${part}_pt" | tr - _)"
+        local/data_prep_commonvoice.pl "${COMMONVOICE}/pt/cv-corpus-5.1-2020-06-22/pt" ${part} data/commonvoice_"$(echo "${part}_pt" | tr - _)"
     done
 
-    train_set=commonvoice_train_pt
-    train_dev=commonvoice_dev_pt
-    test_set=commonvoice_test_pt
+    train_set_cv=commonvoice_train_pt
+    train_dev_cv=commonvoice_dev_pt
+    test_set_cv=commonvoice_test_pt
 
     # remove test&dev data from validated sentences
-    utils/copy_data_dir.sh data/commonvoice_validated_pt data/${train_set}
-    utils/filter_scp.pl --exclude data/${train_dev}/wav.scp data/${train_set}/wav.scp > data/${train_set}/temp_wav.scp
-    utils/filter_scp.pl --exclude data/${test_set}/wav.scp data/${train_set}/temp_wav.scp > data/${train_set}/wav.scp
-    utils/fix_data_dir.sh data/${train_set}
+    utils/copy_data_dir.sh data/commonvoice_validated_pt data/${train_set_cv}
+    utils/filter_scp.pl --exclude data/${train_dev_cv}/wav.scp data/${train_set_cv}/wav.scp > data/${train_set_cv}/temp_wav.scp
+    utils/filter_scp.pl --exclude data/${test_set_cv}/wav.scp data/${train_set_cv}/temp_wav.scp > data/${train_set_cv}/wav.scp
+    
+    python local/postproc_text.py data/commonvoice_validated_pt/text
+    python local/postproc_text.py data/${train_set_cv}/text
+    python local/postproc_text.py data/${train_dev_cv}/text
+    python local/postproc_text.py data/${train_dev_cv}/text
+    
+    utils/fix_data_dir.sh data/${train_set_cv}
 fi
 
 
@@ -103,6 +109,15 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
     # following split consider prompt duplication (but does not consider speaker overlap instead)
     local/split_tr_dt_et.sh data/all_pt data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt
     rm -rf data/all_pt data/local
+
+    python local/postproc_text.py data/voxforge_tr_pt/text
+    python local/postproc_text.py data/voxforge_dt_pt/text
+    python local/postproc_text.py data/voxforge_et_pt/text
+
+    utils/fix_data_dir.sh data/voxforge_tr_pt
+    utils/fix_data_dir.sh data/voxforge_dt_pt
+    utils/fix_data_dir.sh data/voxforge_et_pt
+
 fi
 
 

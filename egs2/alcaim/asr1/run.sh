@@ -14,7 +14,7 @@ lm_config=conf/tuning/train_lm_adam.yaml
 inference_config=conf/decode_asr.yaml
 
 ./asr.sh \
-    --nj 96 \
+    --nj 12 \
     --lang pt \
     --ngpu 2 \
     --feats_type fbank_pitch \

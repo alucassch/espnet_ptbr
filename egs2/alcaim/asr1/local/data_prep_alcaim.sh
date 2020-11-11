@@ -29,7 +29,7 @@ trans=$dst/text; [[ -f "$trans" ]] && rm $trans
 utt2spk=$dst/utt2spk; [[ -f "$utt2spk" ]] && rm $utt2spk
 spk2utt=$dst/spk2utt; [[ -f "$spk2utt" ]] && rm $spk2utt
 
-python3 local/data_prep/prep_alcaim.py $src $dst || exit 1
+python3 local/prep_alcaim.py $src $dst || exit 1
 
 utils/fix_data_dir.sh $dst || exit 1
 utils/validate_data_dir.sh --no-feats $dst || exit 1
