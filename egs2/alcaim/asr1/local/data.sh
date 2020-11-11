@@ -96,12 +96,13 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
     log "stage 4: Preparing data for voxforge"
     selected=${VOXFORGE}/voxforge/pt/extracted
     # Initial normalization of the data
-    local/data_prep/local_voxforge/voxforge_data_prep.sh --flac2wav false "${selected}" "pt"
-    local/data_prep/local_voxforge/voxforge_format_data.sh "pt"
+    local/data_prep/voxforge_data_prep.sh --flac2wav false "${selected}" "pt"
+    local/data_prep/voxforge_format_data.sh "pt"
 
     log "stage 3: Split all_pt into data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt"
     # following split consider prompt duplication (but does not consider speaker overlap instead)
-    local/data_prep/local_voxforge/split_tr_dt_et.sh data/all_pt data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt
+    local/data_prep/split_tr_dt_et.sh data/all_pt data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt
+    rm -rf data/all_pt data/local
 fi
 
 
