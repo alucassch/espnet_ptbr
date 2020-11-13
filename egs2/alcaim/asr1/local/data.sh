@@ -17,7 +17,7 @@ stage=1
 stop_stage=100000
 data_url=http://www02.smt.ufrj.br/~igor.quintanilha
 data_url_cv=https://cdn.commonvoice.mozilla.org/cv-corpus-5.1-2020-06-22
-recog_set="lapsbm-val lapsbm-test voxforge-ptbr"
+igordatasets="lapsbm-val lapsbm-test alcaim sid"
 
 log "$0 $*"
 . utils/parse_options.sh
@@ -48,7 +48,7 @@ fi
 
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
 	echo "stage 1.1: Data Download to ${ALCAIM}"
-    for part in lapsbm-val lapsbm-test alcaim sid; do
+    for part in ${igordatasets} ; do
             local/download_and_untar.sh ${ALCAIM} ${data_url} ${part}
 	done
     echo "stage 1.1: Data Download to ${COMMONVOICE}"
