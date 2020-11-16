@@ -92,11 +92,13 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
     python local/postproc_text.py data/commonvoice_validated_pt/text
     python local/postproc_text.py data/${train_set_cv}/text
     python local/postproc_text.py data/${train_dev_cv}/text
-    python local/postproc_text.py data/${train_dev_cv}/text
+    python local/postproc_text.py data/${test_set_cv}/text
     
     utils/fix_data_dir.sh data/${train_set_cv}
+    utils/fix_data_dir.sh data/${train_dev_cv}
+    utils/fix_data_dir.sh data/${test_set_cv}
 
-    utils/combine_data.sh --extra_files utt2num_frames data/commonvoice-ptbr data/${train_set_cv} data/${train_dev_cv} data/${train_dev_cv}
+    utils/combine_data.sh --extra_files utt2num_frames data/commonvoice-ptbr data/${train_set_cv} data/${train_dev_cv} data/${test_set_cv}
 fi
 
 
@@ -107,20 +109,24 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
     local/voxforge_data_prep.sh --flac2wav true "${selected}" "pt"
     local/voxforge_format_data.sh "pt"
 
+    train_set_vf=voxforge_tr_pt
+    train_dev_vf=voxforge_dt_pt
+    test_set_vf=voxforge_et_pt
+
     log "stage 1: Split all_pt into data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt"
     # following split consider prompt duplication (but does not consider speaker overlap instead)
-    local/split_tr_dt_et.sh data/all_pt data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt
+    local/split_tr_dt_et.sh data/all_pt data/${train_set_vf} data/${train_dev_vf} data/${test_set_vf}
     rm -rf data/all_pt data/local
 
-    python local/postproc_text.py data/voxforge_tr_pt/text
-    python local/postproc_text.py data/voxforge_dt_pt/text
-    python local/postproc_text.py data/voxforge_et_pt/text
+    python local/postproc_text.py data/${train_set_vf}/text
+    python local/postproc_text.py data/${train_dev_vf}/text
+    python local/postproc_text.py data/${test_set_vf}/text
 
-    utils/fix_data_dir.sh data/voxforge_tr_pt
-    utils/fix_data_dir.sh data/voxforge_dt_pt
-    utils/fix_data_dir.sh data/voxforge_et_pt
+    utils/fix_data_dir.sh data/${train_set_vf}
+    utils/fix_data_dir.sh data/${train_dev_vf}
+    utils/fix_data_dir.sh data/${test_set_vf}
 
-    utils/combine_data.sh --extra_files utt2num_frames data/voxforge data/voxforge_tr_pt data/voxforge_dt_pt data/voxforge_et_pt
+    utils/combine_data.sh --extra_files utt2num_frames data/voxforge data/${train_set_vf} data/${train_dev_vf} data/${test_set_vf}
     rm -rf exp/data_prep_pt
 fi
 
