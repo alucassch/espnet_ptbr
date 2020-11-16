@@ -4,7 +4,20 @@ import shutil
 from tempfile import mkstemp
 
 def process_text(text: str) -> str:
-    return text.lower().replace(',','').replace('.','').replace('-','').replace('?','').replace('!','').replace(':','').replace('"','').replace("'","")
+    text = text.lower()
+    text = text.replace(',','')
+    text = text.replace('.','')
+    text = text.replace('-','')
+    text = text.replace('?','')
+    text = text.replace('!','')
+    text = text.replace(':','')
+    text = text.replace('"','')
+    text = text.replace("'","")
+    text = text.replace(";","")
+    text = text.replace("ü", "u")
+    text = text.replace('”','')
+    text = text.replace('“','')
+    return text
 
 def main(text_file: str) -> None:
     if not os.path.exists(text_file):
