@@ -1234,18 +1234,11 @@ if ! "${skip_eval}"; then
         # Show results in Markdown syntax
         scripts/utils/show_asr_result.sh "${asr_exp}" > "${asr_exp}"/RESULTS.md
         cat "${asr_exp}"/RESULTS.md
-
     fi
-else
-    log "Skip the evaluation stages"
-fi
-
-
-packed_model="${asr_exp}/${asr_exp##*/}_${inference_asr_model%.*}.zip"
-if ! "${skip_upload}"; then
+    
     if [ ${stage} -le 13 ] && [ ${stop_stage} -ge 13 ]; then
+        packed_model="${asr_exp}/${asr_exp##*/}_${inference_asr_model%.*}.zip"
         log "Stage 13: Pack model: ${packed_model}"
-
         _opts=
         if "${use_lm}"; then
             _opts+="--lm_train_config ${lm_exp}/config.yaml "
@@ -1268,8 +1261,12 @@ if ! "${skip_upload}"; then
             --option "${asr_exp}"/images \
             --outpath "${packed_model}"
     fi
+else
+    log "Skip the evaluation stages"
+fi
 
 
+if ! "${skip_upload}"; then
     if [ ${stage} -le 14 ] && [ ${stop_stage} -ge 14 ]; then
         log "Stage 14: Upload model to Zenodo: ${packed_model}"
 
