@@ -1,0 +1,60 @@
+num_workers: 5
+# network architecture
+# encoder related
+encoder: rnn
+encoder_conf:
+    rnn_type: lstm     # encoder architecture type
+    bidirectional: True
+    use_projection: True
+    num_layers: 2
+    hidden_size: 256
+    output_size: 256
+    dropout: 0.0
+    
+# decoder related
+decoder: rnn
+decoder_conf:
+    rnn_type: lstm
+    num_layers: 2
+    hidden_size: 256
+    sampling_probability: 0
+    dropout: 0.0
+    att_conf:
+        atype: location
+        adim: 256
+        aconv_chans: 5
+        aconv_filts: 50
+
+# hybrid CTC/attention
+model_conf:
+    ctc_weight: 0.5
+
+val_scheduler_criterion:
+- valid
+- loss
+best_model_criterion:
+-   - valid
+    - acc
+    - max
+keep_nbest_models: 5
+scheduler: reducelronplateau
+scheduler_conf:
+        mode: min
+        factor: 0.5
+        patience : 1
+
+# optimization related
+optim: adadelta
+optim_conf:
+    lr: 1.0
+    rho: 0.95
+    eps: 1.0e-08
+    weight_decay: 0
+init: xavier_uniform
+max_epoch: 50
+patience: 5
+
+# minibatch related
+batch_type: folded
+batch_size: 30 
+
