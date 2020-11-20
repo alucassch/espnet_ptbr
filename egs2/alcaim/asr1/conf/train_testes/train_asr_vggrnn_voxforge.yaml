@@ -6,24 +6,24 @@ encoder_conf:
     rnn_type: lstm     # encoder architecture type
     bidirectional: True
     use_projection: True
-    num_layers: 3
-    hidden_size: 512
-    output_size: 512
-    dropout: 0.0
+    num_layers: 4
+    hidden_size: 320
+    output_size: 320
+    dropout: 0.1
     
 # decoder related
 decoder: rnn
 decoder_conf:
     rnn_type: lstm
     num_layers: 2
-    hidden_size: 512
+    hidden_size: 320
     sampling_probability: 0
-    dropout: 0.0
+    dropout: 0.1
     att_conf:
         atype: location
         adim: 512
-        aconv_chans: 6
-        aconv_filts: 60
+        aconv_chans: 10
+        aconv_filts: 100
 
 # hybrid CTC/attention
 model_conf:
@@ -52,9 +52,9 @@ optim_conf:
     weight_decay: 0
 init: xavier_uniform
 max_epoch: 50
-patience: 5
+patience: 10
 
 # minibatch related
 batch_type: folded
-batch_size: 10 
+batch_size: 20 
 

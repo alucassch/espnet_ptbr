@@ -14,6 +14,7 @@ inference_config=conf/decode_asr.yaml
 
 for dataset in ${datasets}; do
     for model_type in ${model_types}; do
+    
         if [ "${dataset}" = voxforge ]; then
             train_set="voxforge_tr_pt"
             valid_set="voxforge_dt_pt"
@@ -24,7 +25,7 @@ for dataset in ${datasets}; do
             test_sets="commonvoice_test_pt lapsbm voxforge sid"
         fi
 
-        if [ "$model_type}" = vggrnn ]; then
+        if [ "${model_type}" = vggrnn ]; then
             asr_config=conf/train_testes/train_asr_vggrnn_${dataset}.yaml
         elif [ "${model_type}" = rnn ]; then
             asr_config=conf/train_testes/train_asr_rnn_${dataset}.yaml
@@ -57,8 +58,11 @@ for dataset in ${datasets}; do
                         --valid_set "${valid_set}" \
                         --test_sets "${test_sets}" \
                         --srctexts "data/${train_set}/text" "$@"
+                    
                     touch "${asr_tag}".done
-                fi
+                else
+		    echo "skip ${asr_tag}"
+		fi
             done
         done
     done
