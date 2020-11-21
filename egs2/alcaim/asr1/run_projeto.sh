@@ -41,14 +41,14 @@ for dataset in ${datasets}; do
                     ./asr.sh \
                         --stage 1 \
                         --asr_tag "${asr_tag}" \
-                        --nj 200 \
-                        --inference_nj 200 \
+                        --nj 250 \
+                        --inference_nj 250 \
                         --lang pt \
                         --ngpu 2 \
                         --feats_type ${feature_type} \
                         --audio_format wav \
                         --token_type ${token_type} \
-                        --nbpe 1000 \
+                        --nbpe 500 \
                         --bpemode bpe \
                         --use_lm false \
                         --max_wav_duration 30 \
