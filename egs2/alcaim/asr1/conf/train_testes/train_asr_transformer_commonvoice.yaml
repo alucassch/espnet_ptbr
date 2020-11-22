@@ -3,7 +3,7 @@ batch_type: numel
 batch_bins: 6000000
 accum_grad: 4
 max_epoch: 60
-patience: 10
+patience: 5
 early_stopping_criterion:
     - valid
     - acc

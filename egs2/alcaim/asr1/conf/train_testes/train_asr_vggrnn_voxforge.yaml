@@ -1,4 +1,11 @@
 num_workers: 5
+
+patience: 5
+early_stopping_criterion:
+    - valid
+    - acc
+    - max
+
 # network architecture
 # encoder related
 encoder: vgg_rnn
@@ -52,7 +59,6 @@ optim_conf:
     weight_decay: 0
 init: xavier_uniform
 max_epoch: 50
-patience: 10
 
 # minibatch related
 batch_type: folded
