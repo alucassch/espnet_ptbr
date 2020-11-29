@@ -2,7 +2,7 @@ num_workers: 5
 batch_type: numel
 batch_bins: 6000000
 accum_grad: 4
-max_epoch: 60
+max_epoch: 120
 patience: 5
 early_stopping_criterion:
     - valid
@@ -27,7 +27,7 @@ optim_conf:
     lr: 0.002
 scheduler: warmuplr
 scheduler_conf:
-    warmup_steps: 5000
+    warmup_steps: 3000
 
 encoder: transformer
 encoder_conf:
