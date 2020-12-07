@@ -80,7 +80,7 @@ if [ ! -f $data/$part.tar.gz ]; then
   fi
 fi
 
-if ! pigz -dc $data/$part.tar.gz | pv | tar xf - -C $data/$part; then
+if ! pigz -dc $data/$part.tar.gz | tar xf - -C $data/$part; then
   echo "$0: error un-tarring archive $data/$part.tar.gz"
   exit 1
 fi
