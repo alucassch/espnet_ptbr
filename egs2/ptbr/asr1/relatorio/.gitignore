@@ -1,0 +1,8 @@
+./venv
+./data
+./exp
+./.ipynb_checkpoints
+./asr_train_*.zip
+./meta.yaml
+./*Zone.Identifier*
+./imagens/train_data/*Zone.Identifier
