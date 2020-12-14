@@ -1,1 +1,0 @@
-../../../voxforge/asr1/local/make_trans.py

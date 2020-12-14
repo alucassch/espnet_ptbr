@@ -1,1 +1,0 @@
-../../../voxforge/asr1/local/voxforge_format_data.sh
