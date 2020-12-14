@@ -1,6 +1,0 @@
-[submodule "doc/notebook"]
-	path = doc/notebook
-	url = https://github.com/espnet/notebook
-[submodule "egs2/alcaim/asr1/project_scripts"]
-	path = egs2/alcaim/asr1/project_scripts
-	url = git@github.com:alucassch/asr_ptbr_ml_project.git
